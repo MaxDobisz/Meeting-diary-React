@@ -1,0 +1,76 @@
+body {
+  background-color: rgb(138, 170, 227);
+}
+
+h1 {
+  text-align: center;
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+}
+
+input {
+  background-color: antiquewhite;
+  border-radius: 7px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.app-wrapper {
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 80%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+.submit-button {
+  border-radius: 50px;
+  width: 80%;
+  margin: 10px auto;
+  box-shadow: 0 0 5px 0px black;
+  background-color: black;
+  color: antiquewhite;
+}
+
+.error {
+  color: antiquewhite;
+  font-size: 1em;
+  background-color: brown;
+  border-radius: 7px;
+  list-style-type: none;
+  padding: 10px;
+  text-align: center;
+}
+
+.meetingsList {
+  background-color: rgb(234, 116, 142);
+  border-radius: 20px;
+  padding: 10px;
+  border: 2px solid black;
+}
+
+td {
+  padding: 3px;
+  font-size: 16px;
+}
+
+th {
+  text-align: left;
+}
+
+.removeButton {
+  color: white;
+  background-color: black;
+  font-size: 16px;
+  border-radius: 50%;
+}
