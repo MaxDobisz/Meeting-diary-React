@@ -1,5 +1,6 @@
 import React from 'react';
 import CalendarFormInput from './CalendarFormInput'
+import inputsData from './inputsData.json';
 
 export default class Calendar extends React.Component {
     state= {
@@ -19,32 +20,43 @@ export default class Calendar extends React.Component {
     }
     
     validation() {
-        const {firstName, lastName, email, date, time} = this.state;
         let errors = [];
+        const fields = inputsData.inputsData;
 
-        const namePatern = /^[a-zA-Z]{3,}$/
-        if(!namePatern.test(firstName)) {
-            errors.push('First name is not correct!');
-        }
+        fields.forEach( (field) => {
+            const {type, pattern} = field;
+            const value = this.formRef.elements[field.name].value;
+            
+            if(type === 'text') {
+                const reg = new RegExp(pattern);
+                if(!reg.test(value)) {
+                    errors.push(`${field.label} is not correct!`);
+                }
+            }
 
-        if(!namePatern.test(lastName)) {
-            errors.push('Last name is not correct!');
-        }
+            if(type === 'email') {
+                const reg = new RegExp(pattern);
+                if(!reg.test(value)) {
+                    errors.push(`${field.label} is not correct!`);
+                }
+            }
 
-        const emailPatern = /^[a-z0-9]+\.*[a-z0-9]+@{1}[a-z0-9]+\.{1}[a-z0-9]+$/;
-        if(!emailPatern.test(email)) {
-            errors.push('Email is not correct!');
-        }
+            if(type === 'date') {
+                const reg = new RegExp(pattern);
+                if(!reg.test(value)) {
+                    errors.push(`${field.label} is not correct!`);
+                }
+            }
 
-        const datePatern = /^[0-9]{4}-{1}[0-9]{2}-{1}[0-9]{2}$/;
-        if(!datePatern.test(date)) {
-            errors.push('Date is not correct!');
-        }
+            if(type === 'time') {
+                const reg = new RegExp(pattern);
+                if(!reg.test(value)) {
+                    errors.push(`${field.label} is not correct!`);
+                }
+            }
+        })
 
-        const timePatern = /^[0-9]{2}:{1}[0-9]{2}$/;
-        if(!timePatern.test(time)) {
-            errors.push('Time is not correct!');
-        }
+        const {firstName, lastName, email, date, time} = this.state;
 
         this.setState({
             errors: errors
@@ -96,7 +108,7 @@ export default class Calendar extends React.Component {
 
     render() {
         return (
-            <form className='form' onSubmit={this.submitForm}>
+            <form className='form' onSubmit={this.submitForm} ref= {el => this.formRef = el}>
                 {this.renderInputs(this.props.inputsData)}
                 <input className={'submit-button'} type='submit' value={'SUBMIT'} />
                 {this.renderErrors()}

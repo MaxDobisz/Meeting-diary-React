@@ -1,0 +1,39 @@
+{
+    "inputsData": [
+        {
+            "label": "First name",
+            "name": "firstName",
+            "placeholder": "John",
+            "type": "text",
+            "pattern": "^[a-zA-Z]{3,}$"
+        },
+        {
+            "label": "Last name",
+            "name": "lastName",
+            "placeholder": "Smith",
+            "type": "text",
+            "pattern": "^[a-zA-Z]{3,}$"
+        },
+        {
+            "label": "Email",
+            "name": "email",
+            "placeholder": "email@gmail.com",
+            "type": "email",
+            "pattern": "^[a-z0-9]+.*[a-z0-9]+@{1}[a-z0-9]+.{1}[a-z0-9]+$"
+        },
+        {
+            "label": "Date",
+            "name": "date",
+            "placeholder": "yyyy-mm-dd",
+            "type": "date",
+            "pattern": "^[0-9]{4}-{1}[0-9]{2}-{1}[0-9]{2}$"
+        },
+        {
+            "label": "Time",
+            "name": "time",
+            "placeholder": "hh:mm",
+            "type": "time",
+            "pattern": "^[0-9]{2}:{1}[0-9]{2}$"
+        }
+    ]
+}

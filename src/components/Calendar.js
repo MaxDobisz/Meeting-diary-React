@@ -2,24 +2,20 @@ import React from 'react';
 import CalendarList from './CalendarList';
 import CalendarForm from './CalendarForm';
 import CalendarListItem from './CalendarListItem';
+import API from './Provider';
+import inputsData from './inputsData.json'
 
 export default class Calendar extends React.Component {
     state = {
         meetings:[]
     }
+    
+    api = new API();
 
     url = 'http://localhost:3005/meetings/';
-
+    
     addMeeting = (meeting) => {
-        fetch(this.url, {
-                method: "POST",
-                body: JSON.stringify(meeting),
-                headers: {"Content-Type": "application/json"}
-            })
-            .then(resp => {
-                if(resp.ok) { return resp.json(); }
-                return Promise.reject(resp);
-            })
+        this.api.insert(meeting)
             .then(resp => {
                 this.addMeetingToState(resp)
             })
@@ -37,20 +33,14 @@ export default class Calendar extends React.Component {
     }
 
     removeMeeting = (meetingId) => {
-        fetch(`${this.url}${meetingId}`, {
-            method: "DELETE",
-        })
-        .then(resp => {
-            if(resp.ok) {
-                this.removeMeetingFromState(meetingId);
-            } else {
-                return Promise.reject(resp);
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            alert('there was a problem with the server , please try again');
-        });
+        if(window.confirm('Are you sure you want to delete this meeting?')) {
+            this.api.delete(meetingId)
+                .then( () => this.removeMeetingFromState(meetingId))
+                .catch(err => {
+                    console.error(err);
+                    alert('there was a problem with the server , please try again');
+                });
+        }
     }
 
     removeMeetingFromState(meetingId) {
@@ -61,14 +51,7 @@ export default class Calendar extends React.Component {
     }
 
     getMeetingListFromAPI() {
-        fetch(this.url)
-            .then(resp => {
-                if(resp.ok) { 
-                    return resp.json() 
-                } else {
-                    return Promise.reject(resp)
-                }
-            })
+        this.api.get()
             .then(resp => { 
                 this.setState({
                     meetings: resp
@@ -91,37 +74,9 @@ export default class Calendar extends React.Component {
     }
 
     render() {
-        const inputsData = [
-            {
-                label: 'First name:',
-                name: 'firstName',
-                placeholder: 'John',
-            },
-            {
-                label: 'Last name:',
-                name: 'lastName',
-                placeholder: 'Smith',
-            },
-            {
-                label: 'Email:',
-                name: 'email',
-                placeholder: 'email@gmail.com',
-            },
-            {
-                label: 'Date:',
-                name: 'date',
-                placeholder: 'yyyy-mm-dd',
-            }, 
-            {
-                label: 'Time:',
-                name: 'time',
-                placeholder: 'hh:mm',
-            }
-        ];
-        
         return (
             <div className='app-wrapper'>
-                <CalendarForm inputsData={inputsData} updateMeetings={this.addMeeting}/>
+                <CalendarForm inputsData={inputsData.inputsData} updateMeetings={this.addMeeting}/>
                 <CalendarList>
                     {this.renderCalendarListItems()}
                 </CalendarList>
