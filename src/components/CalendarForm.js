@@ -24,36 +24,12 @@ export default class Calendar extends React.Component {
         const fields = inputsData.inputsData;
 
         fields.forEach( (field) => {
-            const {type, pattern} = field;
+            const {pattern} = field;
             const value = this.formRef.elements[field.name].value;
-            
-            if(type === 'text') {
-                const reg = new RegExp(pattern);
-                if(!reg.test(value)) {
-                    errors.push(`${field.label} is not correct!`);
-                }
-            }
-
-            if(type === 'email') {
-                const reg = new RegExp(pattern);
-                if(!reg.test(value)) {
-                    errors.push(`${field.label} is not correct!`);
-                }
-            }
-
-            if(type === 'date') {
-                const reg = new RegExp(pattern);
-                if(!reg.test(value)) {
-                    errors.push(`${field.label} is not correct!`);
-                }
-            }
-
-            if(type === 'time') {
-                const reg = new RegExp(pattern);
-                if(!reg.test(value)) {
-                    errors.push(`${field.label} is not correct!`);
-                }
-            }
+            const reg = new RegExp(pattern);
+            if(!reg.test(value)) {
+                errors.push(`${field.label} is not correct!`);
+            }          
         })
 
         const {firstName, lastName, email, date, time} = this.state;
